@@ -1,0 +1,15 @@
+{
+  "name": "kraken-mcp",
+  "version": "1.0.0",
+  "description": "Kraken MCP server for Poke",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "ccxt": "^4.4.34",
+    "express": "^4.21.2"
+  }
+}
