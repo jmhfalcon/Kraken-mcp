@@ -1,0 +1,1 @@
+{"name": "kraken-mcp","version": "1.0.0","type": "module","main": "server.js","scripts": {"start": "node server.js"},"dependencies": {"@modelcontextprotocol/sdk": "¹.0.4","ccxt": "⁴.2.0","express": "⁴.19.2"}}
