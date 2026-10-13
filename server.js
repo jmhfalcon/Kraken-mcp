@@ -51,8 +51,7 @@ function createMcpServer() {
     async () => {
       const orders = await kraken.fetchOpenOrders();
       return {
-        content: [{ type: "text", text: JSON.stringify(
-          orders) }],
+        content: [{ type: "text", text: JSON.stringify(orders) }],
       };
     },
   );
@@ -61,10 +60,7 @@ function createMcpServer() {
     "get_ticker",
     "Get ticker price for a symbol such as BTC/USD or ETH/USD.",
     {
-      symbol: {
-        type: "string",
-        description: "Kraken market symbol, for example BTC/USD",
-      },
+      symbol: z.string().describe("Kraken market symbol, for example BTC/USD"),
     },
     async ({ symbol }) => {
       const ticker = await kraken.fetchTicker(symbol);
@@ -83,15 +79,14 @@ function createMcpServer() {
       };
     },
   );
-
   server.tool(
     "place_limit_order",
     "Place a post-only limit order on Kraken. This can trade real funds.",
     {
-      symbol: { type: "string", description: "Market symbol, for example BTC/USD" },
-      side: { type: "string", enum: ["buy", "sell"] },
-      amount: { type: "number", description: "Order amount" },
-      price: { type: "number", description: "Limit price" },
+      symbol: z.string().describe("Market symbol, for example BTC/USD"),
+      side: z.enum(["buy", "sell"]),
+      amount: z.number().describe("Order amount"),
+      price: z.number().describe("Limit price"),
     },
     async ({ symbol, side, amount, price }) => {
       const order = await kraken.createOrder(
@@ -103,8 +98,7 @@ function createMcpServer() {
         { postOnly: true },
       );
       return {
-        content: [{ type: "text", text: JSON.stringify
-                   (order) }],
+        content: [{ type: "text", text: JSON.stringify(order) }],
       };
     },
   );
@@ -113,9 +107,9 @@ function createMcpServer() {
     "place_market_order",
     "Place a market order on Kraken. This can trade real funds.",
     {
-      symbol: { type: "string", description: "Market symbol, for example BTC/USD" },
-      side: { type: "string", enum: ["buy", "sell"] },
-      amount: { type: "number", description: "Order amount" },
+      symbol: z.string().describe("Market symbol, for example BTC/USD"),
+      side: z.enum(["buy", "sell"]),
+      amount: z.number().describe("Order amount"),
     },
     async ({ symbol, side, amount }) => {
       const order = await kraken.createOrder(symbol, "market", side, amount);
@@ -129,7 +123,8 @@ function createMcpServer() {
     "cancel_order",
     "Cancel an open Kraken order by its order ID.",
     {
-      order_id: { type: "string", description: "Kraken order ID" },
+      order_id: z.string().describe("Kraken order ID
+                                    "),
     },
     async ({ order_id }) => {
       const result = await kraken.cancelOrder(order_id);
@@ -183,7 +178,7 @@ app.post("/messages", async (req, res) => {
   }
 
   const session = sessions.get(sessionId);
-  if (!session) {
+  if (! session) {
     return res.status(404).send("Unknown or closed MCP session");
   }
 
@@ -196,6 +191,7 @@ app.post("/messages", async (req, res) => {
     }
   }
 });
+
 console.log("Kraken MCP server listening on port " + port);
 app.listen(port, "0.0.0.0", () => {
   console.log("SSE endpoint: /sse");
