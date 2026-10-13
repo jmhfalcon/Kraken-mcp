@@ -196,7 +196,7 @@ app.post("/messages", async (req, res) => {
     }
   }
 });
-
+console.log("Kraken MCP server listening on port " + port);
 app.listen(port, "0.0.0.0", () => {
   console.log(Kraken MCP server listening on port ${port});
   console.log("SSE endpoint: /sse");
