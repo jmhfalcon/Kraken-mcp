@@ -2,6 +2,7 @@
 import express from "express";
 import ccxt from "ccxt";
 import { randomUUID } from "node:crypto";
+import {z} from "zod"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 
