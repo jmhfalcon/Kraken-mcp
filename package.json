@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@modelcontextprotocol/sdk": "^latest",
     "ccxt": "^4.4.34",
     "express": "^4.21.2"
   }
