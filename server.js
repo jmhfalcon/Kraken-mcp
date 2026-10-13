@@ -152,8 +152,7 @@ app.get("/sse", async (req, res) => {
   sessions.set(transport.sessionId, { transport, server });
 
   transport.onclose = async () => {
-    sessions.delete(transport.sessio
-                    nId);
+    sessions.delete(transport.sessionId);
     try {
       await server.close();
     } catch (error) {
